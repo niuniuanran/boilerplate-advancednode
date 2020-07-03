@@ -7,6 +7,7 @@ const passport = require("passport");
 const ObjectID = require("mongodb").ObjectID;
 const mongo = require("mongodb").MongoClient;
 const LocalStrategy = require("passport-local");
+require('dotenv').config();
 
 const app = express();
 
