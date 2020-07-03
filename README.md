@@ -9,3 +9,8 @@ Authentication is the process or action of verifying the identity of a user or p
 The most common and easiest way to use authentication middleware for Node.js is [PassportJS](https://passportjs.org/). It is easy to learn, light-weight, and extremely flexible allowing for many strategies, which we will talk about in later challenges. We will also explore template engines, specifically [PugJS](https://pugjs.org/api/getting-started.html), and web sockets, [Socket.io](https://socket.io/). Web sockets allow for real time communication between all your clients and your server. Working on these challenges will involve writing your code on Glitch using our starter project. After completing each challenge you can copy your public glitch url (the homepage of your Glitch app) into the challenge screen to test it! Optionally, you may choose to write your project on another platform but it must be publicly visible for our testing.
 
 Start this project on Glitch using this link or clone this repository on [GitHub](https://github.com/freeCodeCamp/boilerplate-advancednode)! If you use Glitch, remember to save the link to your project somewhere safe.
+
+
+[password](http://www.passportjs.org/docs/)
+[glitch](https://glitch.com/edit/#!/remarkable-geode-mustang)
+[A stackoverflow discussion on the new version of MongoClient](https://stackoverflow.com/questions/47662220/db-collection-is-not-a-function-when-using-mongoclient-v3-0)
