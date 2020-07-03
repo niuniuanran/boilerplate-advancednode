@@ -38,7 +38,7 @@ mongo.connect(process.env.DATABASE, (err, client) => {
     if (err) {
         console.log("Database error: " + err);
     } else {
-        const db = client.db("test");
+        const db = client.db("auth");
         passport.serializeUser((user, done) => {
             done(null, user._id);
         });
@@ -71,9 +71,9 @@ mongo.connect(process.env.DATABASE, (err, client) => {
 
         app.post(
             "/login",
-            passport.authenticate("local", { failureRedirect: "/" }, (req, res) => {
+            passport.authenticate("local", { failureRedirect: "/" }), (req, res) => {
                 res.redirect("/profile");
-            })
+            }
         );
 
         const ensureAuthenticated = (req, res, next) => {
