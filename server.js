@@ -7,7 +7,6 @@ const passport = require("passport");
 const ObjectID = require("mongodb").ObjectID;
 const mongo = require("mongodb").MongoClient;
 const LocalStrategy = require("passport-local");
-require('dotenv').config();
 
 const app = express();
 
@@ -27,15 +26,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.route("/").get((req, res) => {
-    res.render(`./pug/index`, { title: "Hello", message: "Please login", showLogin: true });
+    res.render(`./pug/index`, {
+        title: "Homepage Home Page Home page",
+        message: "Please login",
+        showLogin: true
+    });
 });
-
 
 mongo.connect(process.env.DATABASE, (err, client) => {
     if (err) {
         console.log("Database error: " + err);
     } else {
-        const db=client.db("test");
+        const db = client.db("test");
         passport.serializeUser((user, done) => {
             done(null, user._id);
         });
@@ -66,16 +68,36 @@ mongo.connect(process.env.DATABASE, (err, client) => {
             })
         );
 
-        app.post('/login',
-            passport.authenticate('local', { failureRedirect: '/'}),
-            function(req, res) {
-                // If this function gets called, authentication was successful.
-                // `req.user` contains the authenticated user.
-                res.redirect('/profile');
-            });
+        app.post(
+            "/login",
+            passport.authenticate("local", { failureRedirect: "/" }, (req, res) => {
+                res.redirect("/profile");
+            })
+        );
 
-        app.get("/profile", (req, res)=>{
-            res.render('./pug/profile')
+        const ensureAuthenticated = (req, res, next) => {
+            if (req.isAuthenticated()) {
+                return next();
+            }
+            res.redirect("/");
+        };
+
+        app.route("/profile").get(ensureAuthenticated, (req, res) => {
+            res.render(
+                process.cwd() + "/views/pug/profile",
+                /*-->*/ { username: req.user.username } /*<--*/
+            );
+        });
+        app.route("/logout").get((req, res) => {
+            req.logout();
+            res.redirect("/");
+        });
+
+        app.use((req, res, next) => {
+            res
+                .status(404)
+                .type("text")
+                .send("Not Found");
         });
 
         app.listen(process.env.PORT || 3000, () => {
